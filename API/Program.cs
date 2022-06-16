@@ -1,6 +1,6 @@
 using API.Data;
 
-SCBData.getBornData();
+SCBData.init();
 
 var builder = WebApplication.CreateBuilder(args);
 

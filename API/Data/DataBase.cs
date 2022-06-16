@@ -6,7 +6,7 @@ namespace API.Data
     {
         public string DatabaseFile { get; set; } = "BornStastitics.db";
         public DbSet<Models.BornModel>? BornStastitics { get; set; }
-        public DbSet<Models.Region>? Regions { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
