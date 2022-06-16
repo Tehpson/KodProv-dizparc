@@ -1,0 +1,30 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace API.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class BornController : ControllerBase
+    {
+        public Data.DataBase DataBase { get; set; }
+        public BornController([FromServices]Data.DataBase dataBase)
+        {
+            DataBase = dataBase;
+        }
+
+        // GET: api/<BornController>
+        [HttpGet]
+        public IActionResult Get()
+        {
+            
+            var statistics = DataBase.BornStastitics;
+            if (statistics != null)
+            {
+                return Ok(statistics);
+            }
+            return NoContent();
+        }
+    }
+}

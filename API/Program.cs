@@ -1,11 +1,14 @@
 using API.Data;
 
-SCBData.init();
+using var db = new DataBase();
+
+SCBData.init(db);
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddScoped<DataBase>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
