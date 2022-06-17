@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,11 +19,10 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
-            var statistics = DataBase.BornStastitics;
-            if (statistics != null)
+            var data = DataBase.BornStastitics.GroupBy(BornStastitic => BornStastitic.RegionNumber).Select(group => new { region = group.Key, regionData = group.ToList() });
+            if (data != null)
             {
-                return Ok(statistics);
+                return Ok(data);
             }
             return NoContent();
         }
