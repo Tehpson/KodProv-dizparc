@@ -1,6 +1,6 @@
 export interface IRootBornObject {
     region: number
-    regionData: IBornObject
+    regionData: IBornObject[]
 }
 
 export interface IBornObject {

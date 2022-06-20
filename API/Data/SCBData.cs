@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
-using System.Linq;
 
 namespace API.Data
 {
@@ -25,10 +24,27 @@ namespace API.Data
             var resualt = client.PostAsync(endpoint, payload).Result.Content.ReadFromJsonAsync<Root>();
             foreach (var item in resualt.Result.data)
             {
-                var model = new Models.BornModel { RegionNumber = item.key[0], Gender = item.key[1] == 1 ? Models.Gender.Woman : Models.Gender.man, Year = item.key[2], AmountBorn = item.values[0] };
-                dataBase.Add(model);
+                var data = dataBase.BornStastitics.FirstOrDefault(region => region.ID == item.key[0]);
+                if(data != null)
+                {
+                    var yearData = data.RegionData.FirstOrDefault(year => year.Year == item.key[2]);
+                    if(yearData!= null)
+                    {
+                        _ = item.key[1] == 1 ? yearData.AmountBornFemale = item.values[0] : yearData.AmountBornMale = item.values[0];
+                    }
+                    else
+                    {
+                        data.RegionData.Add(item.key[1] == 1 ? new Models.RegionData { Year = item.key[2],  AmountBornFemale = item.values[0]}: new Models.RegionData { Year = item.key[2], AmountBornMale = item.values[0] });
+                    }
+                    dataBase.SaveChanges();
+                }
+                else
+                {
+                    var regionData = (item.key[1] == 1 ? new Models.RegionData { Year = item.key[2], AmountBornFemale = item.values[0] } : new Models.RegionData { Year = item.key[2], AmountBornMale = item.values[0] });
+                    dataBase.BornStastitics.Add(new Models.Data { RegionNumber = item.key[0], RegionData = new List<Models.RegionData> { regionData } });
+                    dataBase.SaveChanges();
+                }
             }
-            dataBase.SaveChanges();
         }
     }
 

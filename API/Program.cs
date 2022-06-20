@@ -9,7 +9,6 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 // Add services to the container.
 
-
 builder.Services.AddScoped<DataBase>();
 builder.Services.AddCors(options =>
 {

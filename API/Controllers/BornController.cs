@@ -19,7 +19,7 @@ namespace API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var data = DataBase.BornStastitics.GroupBy(BornStastitic => BornStastitic.RegionNumber).Select(group => new { region = group.Key, regionData = group.ToList() });
+            var data = DataBase.BornStastitics;
             if (data != null)
             {
                 return Ok(data);

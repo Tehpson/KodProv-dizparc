@@ -1,10 +1,11 @@
 import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
 import { BackendAPI } from '../../assets/API'
-import { IBornObject, IRootBornObject } from '../../assets/Types'
+import { IRootBornObject } from '../../assets/Types'
+import { GridView } from '../../components/Data/GridView'
 
 export const LandingPage = () => {
-    const [data, setData] = useState<IRootBornObject[] | null>()
+    const [bornData, setBornData] = useState<IRootBornObject[] | null>()
     const [flag, setFlag] = useState<boolean>(false)
     const [error, setError] = useState<AxiosError | null>()
 
@@ -13,11 +14,23 @@ export const LandingPage = () => {
             .then((res) => {
                 console.log(res.data)
 
-                res.data?.length > 0 ? setData(res.data) : setData(null)
+                res.data?.length > 0 ? setBornData(res.data) : setBornData(null)
             })
             .then(() => setFlag(true))
             .catch((error: AxiosError) => setError(error))
     }, [])
 
-    return <div></div>
+    return (
+        <div>
+            {flag ? (
+                bornData ? (
+                    <GridView regions={bornData} />
+                ) : (
+                    <div>No Data</div>
+                )
+            ) : (
+                <div>Loading...</div>
+            )}
+        </div>
+    )
 }

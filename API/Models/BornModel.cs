@@ -1,17 +1,17 @@
 ﻿namespace API.Models
 {
-    public class BornModel
+    public class Data
+    {
+        public int ID { get; set; }
+        public int RegionNumber { get; set; }
+        public List<RegionData> RegionData { get; set; }
+    }
+
+    public class RegionData
     {
         public int ID { get; set; }
         public int Year { get; set; }
-        public int RegionNumber { get; set; }
-        public Gender Gender { get; set; }
-        public int AmountBorn { get; set; }
-    }
-
-    public enum Gender
-    {
-        Woman = 1,
-        man = 2,
+        public int AmountBornFemale { get; set; }
+        public int AmountBornMale { get; set; }
     }
 }
